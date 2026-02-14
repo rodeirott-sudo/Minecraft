@@ -16,6 +16,7 @@ Luego abre en el navegador:
 
 ## Controles
 
+- Menú inicial: click en **Generar mundo nuevo...**
 - Click: capturar cursor
 - WASD: mover
 - Espacio: saltar

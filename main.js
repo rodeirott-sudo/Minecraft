@@ -132,6 +132,16 @@ const blockTypes = [
 let currentBlockType = blockTypes[0];
 const blockLabel = document.getElementById("block-name");
 const hint = document.getElementById("hint");
+const hud = document.getElementById("hud");
+const crosshair = document.getElementById("crosshair");
+const mainMenu = document.getElementById("main-menu");
+const menuMessage = document.getElementById("menu-message");
+const startButton = document.getElementById("start-game");
+const loadButton = document.getElementById("load-game");
+const tutorialButton = document.getElementById("tutorial");
+const optionsButton = document.getElementById("options");
+
+let gameStarted = false;
 
 const blockSize = 1;
 const cubeGeometry = new THREE.BoxGeometry(blockSize, blockSize, blockSize);
@@ -251,7 +261,30 @@ generateTerrain();
 generateClouds();
 
 const controls = new PointerLockControls(camera, document.body);
-renderer.domElement.addEventListener("click", () => controls.lock());
+renderer.domElement.addEventListener("click", () => {
+  if (gameStarted) controls.lock();
+});
+
+
+startButton.addEventListener("click", () => {
+  gameStarted = true;
+  mainMenu.classList.add("hidden");
+  hud.classList.remove("hidden");
+  crosshair.classList.remove("hidden");
+  hint.textContent = "Haz click para capturar el cursor y empezar a jugar.";
+});
+
+loadButton.addEventListener("click", () => {
+  menuMessage.textContent = "Próximamente: sistema de guardado/carga de mundos.";
+});
+
+tutorialButton.addEventListener("click", () => {
+  menuMessage.textContent = "Tutorial no disponible todavía.";
+});
+
+optionsButton.addEventListener("click", () => {
+  menuMessage.textContent = "Opciones rápidas: usa 1-4 para cambiar de bloque y ESC para liberar el cursor.";
+});
 
 controls.addEventListener("lock", () => {
   hint.textContent = "Construye libremente. 1-4 cambia de bloque.";
@@ -306,7 +339,7 @@ const mouseCenter = new THREE.Vector2(0, 0);
 
 window.addEventListener("contextmenu", (event) => event.preventDefault());
 window.addEventListener("mousedown", (event) => {
-  if (!controls.isLocked) return;
+  if (!gameStarted || !controls.isLocked) return;
 
   raycaster.setFromCamera(mouseCenter, camera);
   const intersects = raycaster.intersectObjects(blocksGroup.children, false);
@@ -350,7 +383,7 @@ window.addEventListener("mousedown", (event) => {
 const clock = new THREE.Clock();
 
 function updatePlayer(delta) {
-  if (!controls.isLocked) return;
+  if (!gameStarted || !controls.isLocked) return;
 
   const direction = new THREE.Vector3();
   if (keys.forward) direction.z -= 1;

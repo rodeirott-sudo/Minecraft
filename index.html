@@ -7,7 +7,23 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div id="hud">
+    <div id="main-menu" aria-label="Menú principal">
+      <div class="menu-panel">
+        <h1 class="menu-logo">MINECRAFT</h1>
+        <span class="menu-splash">¡Bloques!</span>
+
+        <div class="menu-buttons">
+          <button id="start-game" class="mc-button">Generar mundo nuevo...</button>
+          <button id="load-game" class="mc-button">Cargar mundo...</button>
+          <button id="tutorial" class="mc-button disabled">Jugar tutorial</button>
+          <button id="options" class="mc-button">Opciones...</button>
+        </div>
+
+        <p id="menu-message">Haz click en “Generar mundo nuevo...” para empezar.</p>
+      </div>
+    </div>
+
+    <div id="hud" class="hidden">
       <h1>MiniCraft 3D</h1>
       <p>
         Haz click para capturar el mouse. <strong>WASD</strong> para moverte,
@@ -17,7 +33,7 @@
       <p>Bloque actual: <span id="block-name">Tierra</span> (teclas 1-4)</p>
       <p id="hint">Pulsa ESC para liberar el cursor.</p>
     </div>
-    <div id="crosshair"></div>
+    <div id="crosshair" class="hidden"></div>
 
     <script type="module" src="main.js"></script>
   </body>
